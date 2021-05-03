@@ -18,8 +18,8 @@ WIDTH = 100
 HEIGHT = 100
 
 # The cell width and height in pixels when drawing.
-CELL_WIDTH = 20
-CELL_HEIGHT = 20
+CELL_WIDTH = 10
+CELL_HEIGHT = 10
 
 
 def create_row_zeros(length):
@@ -242,9 +242,28 @@ def live_or_die(grid, width, height, x, y):
     x: the x-position of the cell
     y: the y-position of the cell
     """
-    def check_cells(grid, x, y):
-        if grid[y][x] == 1:
-            return 
+    if grid[y][x] == 1:
+        alive = True
+
+    if grid[y][x] == 0:
+        alive = False 
+
+    #cell = 1    
+    if alive == True:
+        neighbours = count_neighbours(grid, width, height, x, y)
+        if neighbours == 2 or neighbours == 3:
+           return True
+        else:
+            return False
+
+    # cell = 0
+    elif alive == False:
+        neighbours = count_neighbours(grid, width, height, x, y)
+        if neighbours == 3:
+            return True
+        else:
+            return False
+    return alive
     
 
 
