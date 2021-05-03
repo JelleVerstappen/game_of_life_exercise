@@ -14,20 +14,23 @@ import pygame
 #    [0,1,1],
 #    [0,0,1],
 # ]
-WIDTH = 40
-HEIGHT = 40
+WIDTH = 100
+HEIGHT = 100
 
 # The cell width and height in pixels when drawing.
-CELL_WIDTH = 25
-CELL_HEIGHT = 25
+CELL_WIDTH = 20
+CELL_HEIGHT = 20
 
 
 def create_row_zeros(length):
     """Create a list of zeros of the given length
-
+    
     length: the number of zeros in the list
     """
-    return None
+    zeros = []
+    for i in range(length):
+        zeros.append(0)
+    return zeros
 
 
 def create_empty_grid(width, height):
@@ -38,7 +41,14 @@ def create_empty_grid(width, height):
     width: the width of the grid in cells
     height: the height of the grid in cells
     """
-    return None
+    grid = []
+    for i in range(height):
+        x = []
+        for j in range(width):
+            x.append(0)
+        grid.append(x)
+    
+    return grid
 
 
 def get_left(grid, x, y):
@@ -50,7 +60,10 @@ def get_left(grid, x, y):
 
     If the cell is on the left border, return 0.
     """
-    return None
+    if x == 0:
+        return 0
+    cell_left = grid[y][x - 1]
+    return cell_left
 
 
 def get_right(grid, width, x, y):
@@ -63,7 +76,10 @@ def get_right(grid, width, x, y):
 
     If the cell is on the right border, return 0.
     """
-    return None
+    if x == width - 1:
+        return 0
+    cell_right = grid[y][x + 1]
+    return cell_right
 
 
 def get_top(grid, x, y):
@@ -75,7 +91,10 @@ def get_top(grid, x, y):
 
     If the cell is on the top row, return 0.
     """
-    return None
+    if y == 0:
+        return 0
+    cell_above = grid[y-1][x]
+    return cell_above
 
 
 def get_bottom(grid, height, x, y):
@@ -88,7 +107,10 @@ def get_bottom(grid, height, x, y):
 
     If the cell is on the bottom row, return 0.
     """
-    return None
+    if y == height - 1:
+        return 0
+    cell_below = grid[y+1][x]
+    return cell_below
 
 
 def get_topleft(grid, x, y):
@@ -101,7 +123,12 @@ def get_topleft(grid, x, y):
     If the cell is on the top row, return 0.
     If the cell is on the left column, return 0.
     """
-    return None
+    if y == 0:
+        return 0
+    if x == 0:
+        return 0
+    top_left = grid[y-1][x-1]
+    return top_left
 
 
 def get_topright(grid, width, x, y):
@@ -115,7 +142,12 @@ def get_topright(grid, width, x, y):
     If the cell is on the top row, return 0.
     If the cell is on the last column , return 0.
     """
-    return None
+    if y == 0:
+        return 0
+    if x == width - 1:
+        return 0
+    top_right = grid[y-1][x+1]
+    return top_right
 
 
 def get_bottomleft(grid, height, x, y):
@@ -129,7 +161,12 @@ def get_bottomleft(grid, height, x, y):
     If the cell is on the last row, return 0.
     If the cell is on the first column , return 0.
     """
-    return None
+    if y == height -1:
+        return 0
+    if x == 0:
+        return 0
+    bottom_left = grid[y+1][x-1]
+    return bottom_left
 
 
 def get_bottomright(grid, width, height, x, y):
@@ -144,7 +181,12 @@ def get_bottomright(grid, width, height, x, y):
     If the cell is on the last row, return 0.
     If the cell is on the last column , return 0.
     """
-    return None
+    if y == height - 1:
+        return 0
+    if x == width - 1:
+        return 0
+    bottom_right = grid[y+1][x+1]
+    return bottom_right
 
 
 def get_neighbours(grid, width, height, x, y):
@@ -156,7 +198,17 @@ def get_neighbours(grid, width, height, x, y):
     x: the x-position of the cell
     y: the y-position of the cell
     """
-    return None
+    left = get_left(grid, x, y)
+    right = get_right(grid, width, x, y)
+    bottom = get_bottom(grid, height, x, y)
+    top = get_top(grid, x, y)
+    topright = get_topright(grid, width, x, y)
+    topleft = get_topleft(grid, x, y)
+    bottomright = get_bottomright(grid, width, height, x, y)
+    bottomleft = get_bottomleft(grid, height, x, y)
+    
+    neighbours = [topleft, top, topright, right, bottomright, bottom, bottomleft, left]
+    return neighbours
 
 
 def count_neighbours(grid, width, height, x, y):
@@ -170,7 +222,8 @@ def count_neighbours(grid, width, height, x, y):
     x: the x-position of the cell
     y: the y-position of the cell
     """
-    return None
+    count = sum(get_neighbours(grid, width, height, x, y))
+    return count
 
 
 def live_or_die(grid, width, height, x, y):
@@ -189,7 +242,10 @@ def live_or_die(grid, width, height, x, y):
     x: the x-position of the cell
     y: the y-position of the cell
     """
-    return None
+    def check_cells(grid, x, y):
+        if grid[y][x] == 1:
+            return 
+    
 
 
 def update_grid(grid, width, height):
